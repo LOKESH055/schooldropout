@@ -1,0 +1,5 @@
+student_id,intervention,date,attendance_before,attendance_after,math_before,math_after,science_before,science_after
+S054,Provide remedial classes,2026-03-07,74,90,41,90,21,98
+S005,Provide remedial classes,2026-03-07,86,98,57,86,41,75
+S003,Provide transport support,2026-03-07,69,80,41,78,47,90
+S006,"['Student counseling for attendance', 'Provide remedial classes', 'Provide transport support', 'Enroll in Midday Meal Scheme']",2026-03-07,43,0,76,0,44,0
