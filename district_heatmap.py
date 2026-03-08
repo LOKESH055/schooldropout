@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from risk_predictor import predict_risk
+from risk_predictor import predict_risk_ml  # ✅ updated import
 
 
 def generate_heatmap(students):
@@ -11,7 +11,7 @@ def generate_heatmap(students):
     risk_scores = []
 
     for _, row in df.iterrows():
-        risk_score, _ = predict_risk(row)
+        risk_score, _ = predict_risk_ml(row)  # ✅ use ML function
         risk_scores.append(risk_score)
 
     df["risk_score"] = risk_scores
@@ -21,7 +21,7 @@ def generate_heatmap(students):
 
     heatmap_data = district_risk.to_frame(name="Dropout Risk")
 
-    fig, ax = plt.subplots(figsize=(6,4))
+    fig, ax = plt.subplots(figsize=(6, 4))
 
     heatmap = ax.imshow(
         heatmap_data,
@@ -41,7 +41,7 @@ def generate_heatmap(students):
 
     # Add values inside heatmap
     for i in range(len(heatmap_data.index)):
-        value = heatmap_data.iloc[i,0]
+        value = heatmap_data.iloc[i, 0]
         ax.text(
             0, i,
             f"{value:.1f}%",
