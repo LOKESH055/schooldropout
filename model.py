@@ -3,23 +3,20 @@ import pickle
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder
 
+# ------------------------------
 # Load dataset
+# ------------------------------
 df = pd.read_csv("students.csv")
 
-# Create dropout risk label (synthetic)
-df["dropout_risk"] = (
-    (df["attendance"] < 60) |
-    (df["math"] < 40) |
-    (df["science"] < 40) |
-    (df["sibling_dropout"] == "Yes") |
-    (df["income_level"] == "Low")
-).astype(int)
+# ------------------------------
+# Features and target
+# ------------------------------
+X = df.drop(columns=["dropout_risk", "student_id"])  # Features
+y = df["dropout_risk"]  # Target from generate_data.py (0-100 risk score)
 
-# Features
-X = df.drop(columns=["dropout_risk","student_id"])
-y = df["dropout_risk"]
-
+# ------------------------------
 # Encode categorical columns
+# ------------------------------
 categorical_cols = [
     "district",
     "gender",
@@ -37,16 +34,23 @@ for col in categorical_cols:
     X[col] = le.fit_transform(X[col])
     encoders[col] = le
 
+# ------------------------------
 # Train model
-model = RandomForestClassifier(n_estimators=100, random_state=42)
-model.fit(X,y)
+# ------------------------------
+model = RandomForestClassifier(
+    n_estimators=200,        # Increased for better learning
+    random_state=42,
+    class_weight="balanced", # Helps with imbalanced dropout_risk
+)
+model.fit(X, y)
 
-# Save model
-with open("model.pkl","wb") as f:
-    pickle.dump(model,f)
+# ------------------------------
+# Save model and encoders
+# ------------------------------
+with open("model.pkl", "wb") as f:
+    pickle.dump(model, f)
 
-# Save encoders
-with open("encoders.pkl","wb") as f:
-    pickle.dump(encoders,f)
+with open("encoders.pkl", "wb") as f:
+    pickle.dump(encoders, f)
 
-print("Model trained and saved")
+print("ML Model trained and saved using dropout_risk from dataset")
