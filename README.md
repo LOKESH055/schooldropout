@@ -1,60 +1,106 @@
 # AI Early Warning System for School Dropout Prevention
 
-## Background
-India has a 19% secondary school dropout rate — roughly 1 in 5 students leaves before Class 10.  
-Government schools have attendance registers, exam records, and mid-day meal data but no system that connects these signals to predict which student is at risk.  
-
-This system allows teachers and district officers to **identify at-risk students weeks before dropout**, enabling timely interventions.
+An AI-powered dashboard for **teachers** and **district officers** to predict student dropout risk, recommend interventions, track progress, and visualize district-level dropout risk trends.
 
 ---
 
 ## Features
 
 ### Teacher Dashboard
-- Select a student and view **attendance, exam scores, distance, sibling dropout, and income level**.  
-- Predict **dropout risk score** with **top 3 contributing factors** explained.  
-- **Recommended interventions** for each student.  
-- **Parent message generator** in multiple languages (English, Hindi, Tamil).  
-- **Cohort comparison** with class average.  
-- **Government scheme matcher** for eligible students.  
-- **Intervention outcome tracker** to log changes after interventions and check if the student’s risk decreases.  
-- Shows **if intervention improved student indicators** (attendance/math/science) and whether risk decreased or increased.
+- Add and manage students.
+- Predict dropout risk for individual students using **ML-based or rule-based fallback**.
+- View top risk factors for each student.
+- Recommend interventions tailored to student needs.
+- Communicate with parents in multiple languages.
+- Track outcomes of interventions (attendance, math, science scores).
+- Compare student performance with class averages.
 
 ### District Officer Dashboard
-- **District-level dropout risk heatmap**.  
-- Aggregated anonymized data to help allocate resources.  
+- Visualize district-level dropout risk using a heatmap.
+- Monitor district average attendance and risk trends.
 
 ---
 
-## Installation
+## Technologies Used
+- **Python**  
+- **Streamlit** for interactive web dashboards  
+- **Pandas** for data manipulation  
+- **Matplotlib** for plotting district heatmaps  
+- **Scikit-learn** for ML model training (Random Forest Classifier)  
+- **Pickle** for saving/loading ML models and encoders  
 
-1. Clone the repository:
+---
 
+## Project Structure
+├── app.py # Main Streamlit app
+├── model.py # Train and save ML model
+├── risk_predictor.py # ML prediction and rule-based fallback
+├── district_heatmap.py # District-level heatmap generation
+├── interventions.py # Rule-based interventions
+├── parent_message.py # Generates parent communication messages
+├── scheme_matcher.py # Match students to government schemes
+├── outcome_tracker.py # Track intervention outcomes
+├── generate_data.py # Sample data generation
+├── students.csv # Student dataset
+├── model.pkl # Saved ML model
+├── encoders.pkl # Saved encoders for categorical features
+└── README.md # Project documentation
+
+
+---
+
+## Setup Instructions
+
+1. **Clone the repository**
 ```bash
-git clone https://github.com/<your-username>/edu_guard.git
-cd edu_guard
-2.Install required Python packages:
-Bash
-pip install -r requirements.txt
+git clone https://github.com/LOKESH055/schooldropout.git
+cd schooldropout
 
-3.Run the app:
+2,Create and activate virtual environment
 
-streamlit run app.py
+  python -m venv .venv
+# Windows
+.venv\Scripts\activate
+# Mac/Linux
+source .venv/bin/activate
 
-Usage
+3.Install dependencies
 
-  1.Teacher selects a student from the dashboard.
+ pip install -r requirements.txt
 
-  2.Click Predict Dropout Risk → view risk score and top risk factors.
+4.Run the Streamlit app
 
-  3.Check recommended interventions and generate parent message.
+ streamlit run app.py
 
-  4.Log intervention outcomes (attendance, math, science after intervention).
+5.Open the app in your browser
 
-  5.View intervention effect: the app shows whether the student improved and whether dropout risk decreased.
+ The URL will usually be http://localhost:8501.
 
-  6.District officers can view district-level heatmaps for dropout risk.
+How It Works
+
+ 1.Add student data (attendance, grades, family background).
+
+ 2.Predict dropout risk using a Random Forest ML model.
+
+ 3.Top risk factors are identified for targeted interventions.
+
+ 4.Recommended interventions are suggested to reduce dropout risk.
+
+ 5.Parent communication messages can be generated in multiple languages.
+
+ 6.District-level heatmaps visualize risk trends for monitoring.
+
+ 7.Track intervention outcomes to analyze impact over time.
+
+Notes
+
+The ML model is trained on historical student data (students.csv).
+
+Rule-based predictions act as a fallback when new categories appear in student data.
+
+Ensure that model.pkl and encoders.pkl are in the root directory for ML predictions.
 
 License
 
- This project is licensed under the MIT License.
+This project is MIT Licensed.
+
